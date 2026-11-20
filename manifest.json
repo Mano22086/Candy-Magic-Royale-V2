@@ -1,0 +1,9 @@
+{
+  "name": "Candy Magic Royale v2",
+  "short_name": "Candy Magic Royale v2",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0722",
+  "theme_color": "#2e1065"
+}
