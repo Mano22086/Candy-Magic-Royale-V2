@@ -2,7 +2,7 @@
   'use strict';
 
   const SAVE_KEY = 'cmr_v2_save_v2';
-  const CDN_PRIMARY = ['https:', '', 'cdn.jsdelivr.net', 'gh', 'Mano22086', 'Candy-Magic-Royale@main', ''].join('/');
+    const CDN_PRIMARY = '../Candy-Magic-Royale/';
   const CDN_FALLBACK = ['https:', '', 'raw.githubusercontent.com', 'Mano22086', 'Candy-Magic-Royale', 'main', ''].join('/');
   const ROWS = 8, COLS = 7, HEART_MAX = 5, HEART_REGEN_MS = 25 * 60 * 1000;
 
@@ -114,6 +114,8 @@
     }
   }
 
+  const BOOSTER_FILES = { bomb: '08_bomb_skull.png', rocket: '09_rocket_striped.png', paint: '10_paintbrush_rainbow.png', swap: '12_arrows_cross.png', shuffle: '11_color_wheel.png' };
+  const BOOSTER_ORDER = ['08_bomb_skull.png', '09_rocket_striped.png', '10_paintbrush_rainbow.png', '12_arrows_cross.png', '11_color_wheel.png'];
   function hydrateDomAssets() {
     document.querySelectorAll('img[data-asset]').forEach((el) => {
       const p = el.getAttribute('data-asset');
@@ -122,6 +124,7 @@
         if (!el.dataset.fb) { el.dataset.fb = '1'; el.src = CDN_FALLBACK + p; }
       };
     });
+    document.querySelectorAll('.booster-slot').forEach((slot, idx) => { const btn = slot.closest('[data-b]'); const key = btn ? btn.dataset.b : ''; const f = (key && BOOSTER_FILES[key]) || BOOSTER_ORDER[idx]; if (!f) return; let img = slot.tagName === 'IMG' ? slot : slot.querySelector('img'); if (!img) { slot.textContent = ''; img = document.createElement('img'); img.alt = key || 'booster'; img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'contain'; img.style.pointerEvents = 'none'; slot.appendChild(img); } img.src = CDN_PRIMARY + f; img.onerror = () => { if (!img.dataset.fb) { img.dataset.fb = '1'; img.src = CDN_FALLBACK + f; } }; });
   }
 
   function preloadAllSprites() {
@@ -130,6 +133,7 @@
     STRIPED_FILES.forEach((f) => loadSprite(f));
     loadSprite(COLOR_BOMB_FILE);
     Object.entries(OBS_FILES).forEach(([k, f]) => loadSprite(f, f.endsWith('.jpg')));
+      BOOSTER_ORDER.forEach((f) => loadSprite(f));
     hydrateDomAssets();
   }
 
@@ -994,7 +998,7 @@
           if (!isSolidBlocker(cell)) {
             const path = cell.special === 'color' ? COLOR_BOMB_FILE
               : cell.special === 'wrapped' ? WRAPPED_FILES[cell.color % WRAPPED_FILES.length]
-              : cell.special === 'striped' ? STRIPED_FILES[cell.color % STRIPED_FILES.length]
+              : (cell.special === 'striped' || cell.special === 'striped_h' || cell.special === 'striped_v') ? STRIPED_FILES[cell.color % STRIPED_FILES.length]
               : CANDY_FILES[cell.color % CANDY_FILES.length];
             const drawn = drawSpriteFit(IMG_CACHE.get(path), px, py, cellSize, 3);
             if (!drawn) {
