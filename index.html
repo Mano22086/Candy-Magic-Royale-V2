@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#2e1065">
+  <title>Candy Magic Royale v2</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="appShell">
+    <canvas id="livingBgCanvas"></canvas>
+    <div id="toast"></div>
+
+    <!-- شاشة البداية -->
+    <section id="splashScreen" class="screen active">
+      <div class="splash-content">
+        <div id="engineStatusPill">جاهز للعب</div>
+        <h1>Candy Magic Royale v2</h1>
+        <div class="splash-actions">
+          <button id="btnPlayOnline" type="button">العب الآن أونلاين</button>
+          <button id="btnGoogleSignIn" type="button">تسجيل الدخول بجوجل</button>
+          <button id="btnPlayOffline" type="button">اللعب بدون إنترنت</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- شاشة خريطة الـ 100 مملكة -->
+    <section id="mapScreen" class="screen">
+      <header class="map-topbar">
+        <span id="mapModeChip">أوفلاين</span>
+        <div class="map-stats">
+          <span id="uiHearts">❤️ 5</span>
+          <span id="uiCoins">🪙 0</span>
+          <span id="uiStars">⭐ 0</span>
+        </div>
+        <button id="btnSettingsMap" type="button" aria-label="الإعدادات">⚙️</button>
+      </header>
+
+      <div class="kingdom-header">
+        <button id="btnPrevKingdom" type="button">◀</button>
+        <div class="kingdom-title-wrap">
+          <h2 id="kingdomName">المملكة 1</h2>
+          <span id="kingdomRange">1 - 10</span>
+        </div>
+        <button id="btnNextKingdom" type="button">▶</button>
+        <div class="kingdom-controls">
+          <button id="btnHalf1" type="button">النصف 1</button>
+          <button id="btnHalf2" type="button">النصف 2</button>
+          <button id="btnQuickBoss" type="button">تجربة الزعيم 50</button>
+        </div>
+      </div>
+
+      <div id="levelsGrid"></div>
+
+      <nav class="map-bottom-nav">
+        <button id="navProfile" type="button">الملف</button>
+        <button id="navQuests" type="button">المهام</button>
+        <button id="navWheel" type="button">العجلة</button>
+        <button id="navShop" type="button">المتجر</button>
+        <button id="navLeader" type="button">المتصدرين</button>
+      </nav>
+    </section>
+
+    <!-- شاشة اللعب -->
+    <section id="gameScreen" class="screen">
+      <header class="game-topbar">
+        <button id="btnBackMap" type="button">الخريطة</button>
+        <span id="queenBadge">👑 الملكة</span>
+        <span id="dragonBadge">🐉 التنين</span>
+        <button id="btnMute" type="button">🔊</button>
+      </header>
+
+      <div class="hud-row">
+        <div id="hudLevel">المستوى 1</div>
+        <div id="hudMoves">الحركات: 20</div>
+        <div id="hudScore">النقاط: 0</div>
+        <div id="hudTarget">الهدف: 1000</div>
+        <div id="hudObs">العوائق: 0</div>
+      </div>
+
+      <div id="bossBarWrap">
+        <div id="bossHpFill"></div>
+        <span id="bossHpTxt">100%</span>
+      </div>
+
+      <div id="boardFrame">
+        <canvas id="gameCanvas"></canvas>
+        <div id="fxLayer"></div>
+      </div>
+
+      <div class="boosters-bar">
+        <button class="booster-slot" data-booster="bomb" type="button">
+          💣 <span id="cntBomb">0</span>
+        </button>
+        <button class="booster-slot" data-booster="rocket" type="button">
+          🚀 <span id="cntRocket">0</span>
+        </button>
+        <button class="booster-slot" data-booster="paint" type="button">
+          🎨 <span id="cntPaint">0</span>
+        </button>
+        <button class="booster-slot" data-booster="shuffle" type="button">
+          🔀 <span id="cntShuffle">0</span>
+        </button>
+        <button class="booster-slot" data-booster="swap" type="button">
+          🔄 <span id="cntSwap">0</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- النافذة المنبثقة الموحدة -->
+    <div id="modalBackdrop">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="modalTitle"></h3>
+          <button id="btnCloseModal" type="button" aria-label="إغلاق">✕</button>
+        </div>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./game.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
