@@ -1,5 +1,5 @@
-const CACHE_NAME = 'cmr-v2-cache-v2';
-const SHELL = ['./', './index.html', './styles.css', './game.js', './manifest.json'];
+const CACHE_NAME = 'cmr-v2-cache-v3';
+const SHELL = ['./', './index.html', './styles.css', './game.js', './manifest.json', './audio.js', './admob-bridge.js'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
