@@ -1,0 +1,17 @@
+{
+  "name": "candy-magic-royale-v2",
+  "version": "2.0.0",
+  "description": "Candy Magic Royale v2 - 100 Kingdoms Match-3 Adventure",
+  "scripts": {
+    "prepare:www": "mkdir -p www && cp index.html styles.css game.js audio.js admob-bridge.js manifest.json sw.js www/",
+    "android:sync": "npm run prepare:www && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor-community/admob": "^6.0.0",
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/core": "^6.1.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.0"
+  }
+}
